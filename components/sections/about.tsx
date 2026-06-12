@@ -61,17 +61,17 @@ export function About() {
   return (
     <section
       ref={sectionRef}
-      id="about"
+      id="sobre-mi"
       className="relative mx-auto grid max-w-7xl gap-12 px-5 py-28 md:grid-cols-2 md:gap-16 md:px-8 md:py-40"
     >
       <div className="relative h-[60vh] overflow-hidden rounded-2xl border border-border md:h-[80vh]">
         <div ref={portraitRef} className="absolute inset-0 scale-110 will-change-transform">
           <Image
-            src="/portrait.png"
-            alt="Retrato del DJ Dale Persys"
+            src="/portrait.jpg"
+            alt="Dale Persys mezclando en la cabina bajo luces rojas"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
+            className="object-cover object-top"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
@@ -79,7 +79,7 @@ export function About() {
 
       <div className="flex flex-col justify-center" ref={linesRef}>
         <p data-line className="mb-6 font-mono text-xs uppercase tracking-[0.4em] text-neon">
-          Sección 03 — Bio
+          Sección 02 — Sobre Mí
         </p>
         <div className="space-y-6">
           {paragraphs.map((p, i) => (

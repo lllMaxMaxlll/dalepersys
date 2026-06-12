@@ -69,8 +69,8 @@ export function Hero() {
     >
       <div ref={imageRef} className="absolute inset-0 will-change-transform">
         <Image
-          src="/hero-dj.png"
-          alt="DJ tocando en vivo bajo luces verdes de boliche"
+          src="/hero-dj.jpg"
+          alt="DJ tocando en vivo bajo luces de boliche"
           fill
           priority
           sizes="100vw"
@@ -96,7 +96,7 @@ export function Hero() {
               height={1200}
               priority
               sizes="(max-width: 768px) 82vw, 820px"
-              className="h-auto w-full drop-shadow-[0_0_45px_rgba(0,255,102,0.35)]"
+              className="h-auto w-full hue-rotate-[230deg] drop-shadow-[0_0_45px_rgba(255,45,45,0.35)]"
             />
           </span>
         </h1>

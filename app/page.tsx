@@ -4,12 +4,9 @@ import { Particles } from '@/components/particles'
 import { CursorGlow } from '@/components/cursor-glow'
 import { Nav } from '@/components/nav'
 import { Hero } from '@/components/sections/hero'
-import { Energy } from '@/components/sections/energy'
 import { About } from '@/components/sections/about'
-import { Stats } from '@/components/sections/stats'
-import { VideoShowcase } from '@/components/sections/video-showcase'
+import { Spotify } from '@/components/sections/spotify'
 import { Gallery } from '@/components/sections/gallery'
-import { Timeline } from '@/components/sections/timeline'
 import { Contact, Footer } from '@/components/sections/contact'
 
 export default function Page() {
@@ -21,12 +18,9 @@ export default function Page() {
       <Nav />
       <main className="relative z-10">
         <Hero />
-        <Energy />
         <About />
-        <Stats />
-        <VideoShowcase />
+        <Spotify />
         <Gallery />
-        <Timeline />
         <Contact />
       </main>
       <Footer />

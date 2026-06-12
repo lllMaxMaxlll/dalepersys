@@ -25,9 +25,19 @@ export function Particles() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    let width = (canvas.width = window.innerWidth)
-    let height = (canvas.height = window.innerHeight)
+    const dpr = Math.min(2, window.devicePixelRatio || 1)
+    let width = window.innerWidth
+    let height = window.innerHeight
     let particles: Particle[] = []
+
+    const setSize = () => {
+      width = window.innerWidth
+      height = window.innerHeight
+      canvas.width = width * dpr
+      canvas.height = height * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+    setSize()
 
     const count = Math.min(90, Math.floor(window.innerWidth / 16))
 
@@ -44,8 +54,7 @@ export function Particles() {
     init()
 
     const onResize = () => {
-      width = canvas.width = window.innerWidth
-      height = canvas.height = window.innerHeight
+      setSize()
       init()
     }
     const onMove = (e: MouseEvent) => {
@@ -72,7 +81,7 @@ export function Particles() {
         const dx = mouse.current.x - p.x
         const dy = mouse.current.y - p.y
         const dist = Math.hypot(dx, dy)
-        if (dist < 160) {
+        if (dist > 0 && dist < 160) {
           const force = (160 - dist) / 160
           p.x += (dx / dist) * force * 0.6
           p.y += (dy / dist) * force * 0.6
@@ -85,7 +94,7 @@ export function Particles() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0, 255, 102, ${p.alpha})`
+        ctx.fillStyle = `rgba(255, 45, 45, ${p.alpha})`
         ctx.fill()
       }
       raf = requestAnimationFrame(render)

@@ -7,11 +7,10 @@ export function Loader() {
   const [done, setDone] = useState(false)
 
   useEffect(() => {
-    let frame = 0
     const interval = setInterval(() => {
-      frame += 1
       setProgress((p) => {
         const next = Math.min(100, p + Math.random() * 12 + 4)
+        if (next >= 100) clearInterval(interval)
         return next
       })
     }, 130)
@@ -35,26 +34,21 @@ export function Loader() {
         progress >= 100 ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >
-      <div className="flex items-end gap-1.5 h-16">
-        {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-          <span
-            key={i}
-            className="eq-bar w-1.5 h-full rounded-full bg-neon"
-            style={{ animationDelay: `${i * 0.1}s` }}
-          />
-        ))}
+      <div
+        className={`relative w-[72vw] max-w-[460px] ${
+          progress >= 100 ? 'loader-pulse' : ''
+        }`}
+        style={{ aspectRatio: '1818 / 749' }}
+      >
+        <div className="logo-mask absolute inset-0 bg-foreground/10" />
+        <div
+          className="logo-mask absolute inset-0 bg-neon transition-[clip-path] duration-200 ease-out"
+          style={{ clipPath: `inset(${100 - progress}% 0 0 0)` }}
+        />
       </div>
-      <div className="mt-10 w-56 max-w-[70vw]">
-        <div className="flex items-center justify-between text-xs tracking-[0.3em] text-muted-foreground mb-2 font-mono">
-          <span>CARGANDO</span>
-          <span>{Math.floor(progress)}%</span>
-        </div>
-        <div className="h-px w-full bg-border overflow-hidden">
-          <div
-            className="h-full bg-neon transition-all duration-200 ease-out glow-neon"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+      <div className="mt-8 flex items-center gap-3 font-mono text-xs tracking-[0.3em] text-muted-foreground">
+        <span>CARGANDO</span>
+        <span className="text-neon">{Math.floor(progress)}%</span>
       </div>
     </div>
   )

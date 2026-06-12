@@ -1,5 +1,8 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MessageCircle, Mail, ArrowUpRight } from 'lucide-react'
 
 function InstagramIcon({ className }: { className?: string }) {
@@ -43,34 +46,85 @@ const channels = [
 ]
 
 export function Contact() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const glowRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    gsap.registerPlugin(ScrollTrigger)
+
+    const ctx = gsap.context(() => {
+      gsap.from('[data-contact-item]', {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        stagger: 0.1,
+        scrollTrigger: { trigger: section, start: 'top 70%' },
+      })
+
+      gsap.fromTo(
+        glowRef.current,
+        { scale: 0.4, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 0.3,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top bottom',
+            end: 'center center',
+            scrub: true,
+          },
+        },
+      )
+    }, section)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section
-      id="contact"
+      ref={sectionRef}
+      id="contacto"
       className="relative overflow-hidden px-5 py-32 md:px-8 md:py-44"
     >
       <div
+        ref={glowRef}
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-3xl"
         style={{
           background:
-            'radial-gradient(circle, rgba(0,255,102,0.25) 0%, rgba(0,255,102,0) 70%)',
+            'radial-gradient(circle, rgba(255,45,45,0.25) 0%, rgba(255,45,45,0) 70%)',
         }}
       />
 
       <div className="relative mx-auto max-w-4xl text-center">
-        <p className="mb-6 font-mono text-xs uppercase tracking-[0.5em] text-neon">
-          Sección 08 — Contacto
+        <p
+          data-contact-item
+          className="mb-6 font-mono text-xs uppercase tracking-[0.5em] text-neon"
+        >
+          Sección 05 — Contacto
         </p>
-        <h2 className="font-heading text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-foreground text-balance sm:text-6xl md:text-8xl">
+        <h2
+          data-contact-item
+          className="font-heading text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-foreground text-balance sm:text-6xl md:text-8xl"
+        >
           Armemos la{' '}
           <span className="text-neon text-glow">noche.</span>
         </h2>
-        <p className="mx-auto mt-8 max-w-xl text-pretty text-lg text-muted-foreground">
+        <p
+          data-contact-item
+          className="mx-auto mt-8 max-w-xl text-pretty text-lg text-muted-foreground"
+        >
           Disponible para boliches, fiestas y eventos privados. Llevá el RKT y
           la energía de la pista a tu próxima fecha.
         </p>
 
-        <div className="mt-12 flex justify-center">
+        <div data-contact-item className="mt-12 flex justify-center">
           <a
             href="https://wa.me/5491100000000"
             target="_blank"
@@ -82,13 +136,17 @@ export function Contact() {
           </a>
         </div>
 
-        <ul className="mt-16 grid gap-4 sm:grid-cols-3">
+        <ul data-contact-item className="mt-16 grid gap-4 sm:grid-cols-3">
           {channels.map((c) => (
             <li key={c.label}>
               <a
                 href={c.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={c.href.startsWith('mailto:') ? undefined : '_blank'}
+                rel={
+                  c.href.startsWith('mailto:')
+                    ? undefined
+                    : 'noopener noreferrer'
+                }
                 className="group flex flex-col items-center gap-3 rounded-2xl border border-border p-6 transition-all duration-300 hover:border-neon/60 hover:bg-card"
               >
                 <span className="flex h-12 w-12 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors duration-300 group-hover:border-neon/60 group-hover:text-neon">

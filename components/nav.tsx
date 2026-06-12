@@ -3,11 +3,10 @@
 import { useEffect, useState } from 'react'
 
 const links = [
-  { label: 'Energía', href: '#energy' },
-  { label: 'Bio', href: '#about' },
-  { label: 'En Vivo', href: '#live' },
-  { label: 'Fechas', href: '#timeline' },
-  { label: 'Contacto', href: '#contact' },
+  { label: 'Sobre Mí', href: '#sobre-mi' },
+  { label: 'Spotify', href: '#spotify' },
+  { label: 'Fotos', href: '#fotos' },
+  { label: 'Contacto', href: '#contacto' },
 ]
 
 export function Nav() {
@@ -49,7 +48,7 @@ export function Nav() {
           ))}
         </ul>
         <a
-          href="#contact"
+          href="#contacto"
           className="rounded-full border border-neon/50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-neon transition-all hover:bg-neon hover:text-primary-foreground"
         >
           Contratar

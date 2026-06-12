@@ -6,12 +6,12 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const photos = [
-  { src: '/gallery-1.png', span: 'row-span-2', alt: 'DJ con pirotecnia' },
-  { src: '/crowd.png', span: '', alt: 'La gente en el boliche' },
-  { src: '/smoke.png', span: '', alt: 'Humo y luces en la pista' },
-  { src: '/gallery-2.png', span: 'row-span-2', alt: 'Vista aérea de la fiesta' },
-  { src: '/booth.png', span: '', alt: 'Cabina del DJ de cerca' },
-  { src: '/gallery-3.png', span: '', alt: 'Interior del boliche' },
+  { src: '/gallery-1.jpg', span: 'row-span-2', alt: 'DJ con pirotecnia' },
+  { src: '/crowd.jpg', span: '', alt: 'La gente en el boliche' },
+  { src: '/smoke.jpg', span: '', alt: 'Humo y luces en la pista' },
+  { src: '/gallery-2.jpg', span: 'row-span-2', alt: 'Vista aérea de la fiesta' },
+  { src: '/booth.jpg', span: '', alt: 'Cabina del DJ de cerca' },
+  { src: '/gallery-3.jpg', span: '', alt: 'Interior del boliche' },
 ]
 
 export function Gallery() {
@@ -24,6 +24,18 @@ export function Gallery() {
 
     gsap.registerPlugin(ScrollTrigger)
     const ctx = gsap.context(() => {
+      el.querySelectorAll<HTMLElement>('figure').forEach((fig, i) => {
+        gsap.from(fig, {
+          y: 70,
+          scale: 0.92,
+          opacity: 0,
+          duration: 1,
+          delay: (i % 3) * 0.1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: fig, start: 'top 90%' },
+        })
+      })
+
       el.querySelectorAll<HTMLElement>('[data-parallax]').forEach((img, i) => {
         gsap.to(img, {
           yPercent: i % 2 === 0 ? -14 : -7,
@@ -43,11 +55,11 @@ export function Gallery() {
   return (
     <section
       ref={ref}
-      id="gallery"
+      id="fotos"
       className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-36"
     >
       <p className="mb-3 font-mono text-xs uppercase tracking-[0.4em] text-neon">
-        Sección 06 — Galería
+        Sección 04 — Fotos
       </p>
       <h2 className="mb-14 max-w-2xl font-heading text-3xl font-extrabold uppercase tracking-tight text-foreground text-balance md:text-5xl">
         Postales desde la pista.
