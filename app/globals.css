@@ -1,0 +1,147 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+/* DALE PERSYS theme */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-display), var(--font-geist-sans), 'Geist Fallback';
+  --font-sans: var(--font-geist-sans), 'Geist Fallback';
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback';
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-neon: var(--neon);
+  --color-deep-green: var(--deep-green);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+:root {
+  --background: oklch(0.12 0.004 150);
+  --foreground: oklch(0.97 0.01 150);
+  --card: oklch(0.16 0.01 155);
+  --card-foreground: oklch(0.97 0.01 150);
+  --popover: oklch(0.14 0.008 155);
+  --popover-foreground: oklch(0.97 0.01 150);
+  --primary: oklch(0.86 0.27 150);
+  --primary-foreground: oklch(0.13 0.02 155);
+  --secondary: oklch(0.22 0.04 155);
+  --secondary-foreground: oklch(0.97 0.01 150);
+  --muted: oklch(0.2 0.02 155);
+  --muted-foreground: oklch(0.68 0.03 150);
+  --accent: oklch(0.28 0.08 152);
+  --accent-foreground: oklch(0.97 0.01 150);
+  --destructive: oklch(0.62 0.24 27);
+  --border: oklch(0.3 0.04 152 / 40%);
+  --input: oklch(0.3 0.04 152 / 50%);
+  --ring: oklch(0.86 0.27 150);
+  --neon: oklch(0.86 0.27 150);
+  --deep-green: oklch(0.28 0.08 152);
+  --radius: 0.625rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    background-color: #050505;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--neon);
+    color: #050505;
+  }
+}
+
+@layer utilities {
+  .text-neon {
+    color: var(--neon);
+  }
+  .bg-neon {
+    background-color: var(--neon);
+  }
+  .glow-neon {
+    box-shadow: 0 0 20px oklch(0.86 0.27 150 / 0.35),
+      0 0 60px oklch(0.86 0.27 150 / 0.2);
+  }
+  .text-glow {
+    text-shadow: 0 0 30px oklch(0.86 0.27 150 / 0.5);
+  }
+  .grain {
+    position: relative;
+  }
+  .reveal-line {
+    display: block;
+    overflow: hidden;
+  }
+  .reveal-line > span {
+    display: block;
+    transform: translateY(110%);
+  }
+}
+
+/* Equalizer loader bars */
+@keyframes eq {
+  0%,
+  100% {
+    transform: scaleY(0.25);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.eq-bar {
+  transform-origin: bottom;
+  animation: eq 0.9s ease-in-out infinite;
+}
+
+/* Floating sound-wave pulse */
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+.wave-bar {
+  transform-origin: center;
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eq-bar,
+  .wave-bar {
+    animation: none;
+  }
+}
