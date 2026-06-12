@@ -74,7 +74,7 @@ export function Hero() {
 				<h1 className="reveal-line mx-auto w-[82vw] max-w-135 md:max-w-170 lg:max-w-205">
 					<span>
 						<Image
-							src="/logo.png"
+							src="/logo-red.png"
 							alt="Dale Persys"
 							width={2000}
 							height={1200}
