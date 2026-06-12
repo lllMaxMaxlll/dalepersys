@@ -111,7 +111,7 @@ export function Contact() {
 
 				<div data-contact-item className="mt-12 flex justify-center">
 					<a
-						href="https://wa.me/5491100000000"
+						href="https://wa.me/5492994597274"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-neon px-10 py-5 font-heading text-base font-bold uppercase tracking-[0.15em] text-primary-foreground transition-all duration-300 hover:glow-neon">
