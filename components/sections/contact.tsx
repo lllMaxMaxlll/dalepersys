@@ -102,7 +102,7 @@ export function Contact() {
 				</p>
 				<h2
 					data-contact-item
-					className="font-heading text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-foreground text-balance sm:text-6xl md:text-8xl">
+					className="font-heading text-4xl font-extrabold uppercase leading-[0.95] tracking-tight text-foreground text-balance sm:text-6xl md:text-8xl">
 					Armemos la <span className="text-neon text-glow">noche.</span>
 				</h2>
 				<p data-contact-item className="mx-auto mt-8 max-w-xl text-pretty text-lg text-muted-foreground">

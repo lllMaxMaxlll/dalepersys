@@ -71,7 +71,7 @@ export function Hero() {
 
 			<div ref={titleRef} className="relative z-10 px-6 text-center will-change-transform">
 				<p className="mb-6 font-mono text-xs uppercase tracking-[0.5em] text-neon md:text-sm">DJ · RKT · Argentina</p>
-				<h1 className="reveal-line mx-auto w-[82vw] max-w-135 md:max-w-170 lg:max-w-205">
+				<h1 className="reveal-line mx-auto w-[65vw] max-w-xs md:max-w-md lg:max-w-lg">
 					<span>
 						<Image
 							src="/logo-red.png"
@@ -79,8 +79,8 @@ export function Hero() {
 							width={2000}
 							height={1200}
 							priority
-							sizes="(max-width: 768px) 82vw, 820px"
-							className="h-auto w-full drop-shadow-[0_0_45px_rgba(255,45,45,0.35)]"
+							sizes="(max-width: 768px) 65vw, 512px"
+							className="h-auto w-full"
 						/>
 					</span>
 				</h1>
