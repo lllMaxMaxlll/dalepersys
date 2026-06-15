@@ -28,9 +28,10 @@ export function YouTubeVideo({
 	const id = extractYouTubeId(url);
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 	const [playing, setPlaying] = useState(false);
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(() => {
-		if (!id) return;
+		if (!id || !isLoaded) return;
 		const onMessage = (e: MessageEvent) => {
 			if (e.source !== iframeRef.current?.contentWindow) return;
 			try {
@@ -41,7 +42,7 @@ export function YouTubeVideo({
 		};
 		window.addEventListener("message", onMessage);
 		return () => window.removeEventListener("message", onMessage);
-	}, [id]);
+	}, [id, isLoaded]);
 
 	const startListening = () => {
 		iframeRef.current?.contentWindow?.postMessage(
@@ -50,16 +51,35 @@ export function YouTubeVideo({
 		);
 	};
 
+	// Fallback to official YouTube maxresdefault thumbnail if local poster is one of the missing assets
+	const existingAssets = [
+		"/foto-1.jpg",
+		"/foto-2.jpg",
+		"/foto-3.jpg",
+		"/hero-dj.jpg",
+		"/logo-loading.png",
+		"/logo-red.png",
+		"/og.jpg",
+		"/portrait.jpg",
+		"/placeholder.svg",
+	];
+	const isMissingLocalPoster = poster.startsWith("/") && !existingAssets.includes(poster);
+	const posterUrl = isMissingLocalPoster
+		? id
+			? `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
+			: "/placeholder.svg"
+		: poster;
+
 	return (
 		<figure>
 			<div
 				className={`relative aspect-video overflow-hidden rounded-2xl border transition-all duration-500 ${
 					playing ? "border-neon/70 glow-pulse" : "border-border hover:border-neon/60 hover:glow-neon"
 				}`}>
-				{id ? (
+				{id && isLoaded ? (
 					<iframe
 						ref={iframeRef}
-						src={`https://www.youtube-nocookie.com/embed/${id}?rel=0&enablejsapi=1`}
+						src={`https://www.youtube-nocookie.com/embed/${id}?rel=0&enablejsapi=1&autoplay=1`}
 						title={title}
 						className="absolute inset-0 h-full w-full"
 						style={{ border: 0 }}
@@ -69,24 +89,32 @@ export function YouTubeVideo({
 						allowFullScreen
 					/>
 				) : (
-					<>
+					<button
+						type="button"
+						onClick={() => id && setIsLoaded(true)}
+						disabled={!id}
+						className={`group/btn absolute inset-0 h-full w-full text-left ${id ? "cursor-pointer" : "cursor-default"}`}
+						aria-label={id ? `Reproducir ${title}` : `${title} - Próximamente`}
+					>
 						<Image
-							src={poster}
+							src={posterUrl}
 							alt={title}
 							fill
 							sizes="(max-width: 768px) 100vw, 50vw"
-							className="object-cover opacity-70"
+							className="object-cover opacity-70 transition-transform duration-500 group-hover/btn:scale-105"
 						/>
-						<div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+						<div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
 						<div className="absolute inset-0 flex items-center justify-center">
-							<span className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-background/40 text-muted-foreground backdrop-blur-sm">
+							<span className="flex h-16 w-16 items-center justify-center rounded-full border border-border/80 bg-background/60 text-foreground backdrop-blur-md transition-all duration-300 group-hover/btn:scale-110 group-hover/btn:border-neon group-hover/btn:bg-neon group-hover/btn:text-primary-foreground group-hover/btn:shadow-[0_0_20px_var(--neon)]">
 								<Play className="h-6 w-6 fill-current" />
 							</span>
 						</div>
-						<span className="absolute right-4 top-4 rounded-full border border-border bg-background/60 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground backdrop-blur-sm">
-							Próximamente
-						</span>
-					</>
+						{!id && (
+							<span className="absolute right-4 top-4 rounded-full border border-border bg-background/60 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground backdrop-blur-sm">
+								Próximamente
+							</span>
+						)}
+					</button>
 				)}
 			</div>
 			<figcaption className="mt-4 px-1">
