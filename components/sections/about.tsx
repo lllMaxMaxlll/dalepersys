@@ -81,16 +81,26 @@ export function About() {
 					Sección 02 — Sobre Mí
 				</p>
 				<div className="space-y-6">
-					{paragraphs.map((p, i) => (
-						<p
-							key={i}
-							data-line
-							className={`text-pretty leading-relaxed ${
-								i === 0 ? "font-heading text-2xl font-bold text-foreground md:text-3xl" : "text-lg text-muted-foreground"
-							}`}>
-							{p}
-						</p>
-					))}
+					{paragraphs.map((p, i) => {
+						if (i === 0) {
+							return (
+								<h2
+									key={i}
+									data-line
+									className="font-heading text-2xl font-bold text-foreground md:text-3xl text-pretty leading-relaxed">
+									{p}
+								</h2>
+							);
+						}
+						return (
+							<p
+								key={i}
+								data-line
+								className="text-lg text-muted-foreground text-pretty leading-relaxed">
+								{p}
+							</p>
+						);
+					})}
 				</div>
 				<ul data-line className="mt-10 flex flex-wrap gap-3">
 					{tags.map((t) => (
