@@ -23,6 +23,20 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     lenis.on('scroll', ScrollTrigger.update)
 
+    // Pause Lenis initially if overflow-hidden is already active from the loader
+    if (
+      document.documentElement.style.overflow === 'hidden' ||
+      document.body.style.overflow === 'hidden'
+    ) {
+      lenis.stop()
+    }
+
+    const handleStop = () => lenis.stop()
+    const handleStart = () => lenis.start()
+
+    window.addEventListener('lenis-stop', handleStop)
+    window.addEventListener('lenis-start', handleStart)
+
     const raf = (time: number) => {
       lenis.raf(time * 1000)
     }
@@ -31,6 +45,8 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     return () => {
       gsap.ticker.remove(raf)
+      window.removeEventListener('lenis-stop', handleStop)
+      window.removeEventListener('lenis-start', handleStart)
       lenis.destroy()
     }
   }, [])

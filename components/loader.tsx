@@ -25,6 +25,24 @@ export function Loader() {
     }
   }, [progress])
 
+  useEffect(() => {
+    if (!done) {
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
+      window.dispatchEvent(new CustomEvent('lenis-stop'))
+    } else {
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
+      window.dispatchEvent(new CustomEvent('lenis-start'))
+    }
+
+    return () => {
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
+      window.dispatchEvent(new CustomEvent('lenis-start'))
+    }
+  }, [done])
+
   if (done) return null
 
   return (
