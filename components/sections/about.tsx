@@ -15,6 +15,14 @@ const paragraphs = [
 
 const tags = ["RKT", "Turreo", "Remixes", "Open Format", "Boliche"];
 
+const splitWords = (text: string) => {
+	return text.split(" ").map((word, idx) => (
+		<span key={idx} className="reveal-word inline-block mr-[0.25em] text-foreground opacity-25 transition-colors duration-150">
+			{word}
+		</span>
+	));
+};
+
 export function About() {
 	const sectionRef = useRef<HTMLElement>(null);
 	const portraitRef = useRef<HTMLDivElement>(null);
@@ -28,17 +36,32 @@ export function About() {
 		gsap.registerPlugin(ScrollTrigger);
 
 		const ctx = gsap.context(() => {
-			const lines = linesRef.current?.querySelectorAll("[data-line]");
-			if (lines) {
-				gsap.from(lines, {
-					y: 50,
+			const elements = linesRef.current?.querySelectorAll("[data-fade-in]");
+			if (elements) {
+				gsap.from(elements, {
+					y: 20,
 					opacity: 0,
-					duration: 1,
-					ease: "power3.out",
-					stagger: 0.15,
+					duration: 0.8,
+					ease: "power2.out",
+					stagger: 0.2,
+					scrollTrigger: {
+						trigger: linesRef.current,
+						start: "top 80%",
+					},
+				});
+			}
+
+			const words = linesRef.current?.querySelectorAll(".reveal-word");
+			if (words && words.length > 0) {
+				gsap.to(words, {
+					opacity: 1,
+					stagger: 0.05,
+					ease: "none",
 					scrollTrigger: {
 						trigger: linesRef.current,
 						start: "top 75%",
+						end: "bottom 70%",
+						scrub: true,
 					},
 				});
 			}
@@ -69,7 +92,7 @@ export function About() {
 						src="/portrait.jpg"
 						alt="Dale Persys mezclando en la cabina bajo luces rojas"
 						fill
-						sizes="(max-width: 768px) 100vw, 50vw"
+						sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px"
 						className="object-cover object-center"
 					/>
 				</div>
@@ -77,7 +100,7 @@ export function About() {
 			</div>
 
 			<div className="flex flex-col justify-center" ref={linesRef}>
-				<p data-line className="mb-6 font-mono text-xs uppercase tracking-[0.4em] text-neon">
+				<p data-fade-in className="mb-6 font-mono text-xs uppercase tracking-[0.4em] text-neon">
 					Sección 02 — Sobre Mí
 				</p>
 				<div className="space-y-6">
@@ -86,23 +109,21 @@ export function About() {
 							return (
 								<h2
 									key={i}
-									data-line
 									className="font-heading text-2xl font-bold text-foreground md:text-3xl text-pretty leading-relaxed">
-									{p}
+									{splitWords(p)}
 								</h2>
 							);
 						}
 						return (
 							<p
 								key={i}
-								data-line
-								className="text-lg text-muted-foreground text-pretty leading-relaxed">
-								{p}
+								className="text-lg text-foreground text-pretty leading-relaxed">
+								{splitWords(p)}
 							</p>
 						);
 					})}
 				</div>
-				<ul data-line className="mt-10 flex flex-wrap gap-3">
+				<ul data-fade-in className="mt-10 flex flex-wrap gap-3">
 					{tags.map((t) => (
 						<li
 							key={t}

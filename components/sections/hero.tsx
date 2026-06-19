@@ -46,8 +46,9 @@ export function Hero() {
 			});
 
 			gsap.to(titleRef.current, {
-				yPercent: -40,
+				yPercent: -45,
 				opacity: 0,
+				filter: "blur(16px)",
 				ease: "none",
 				scrollTrigger: {
 					trigger: section,
@@ -80,7 +81,7 @@ export function Hero() {
 				<div className="absolute inset-0 bg-background/30" />
 			</div>
 
-			<div ref={titleRef} className="absolute inset-0 z-10 flex flex-col justify-end px-6 py-28 text-center will-change-transform">
+			<div ref={titleRef} className="absolute inset-0 z-10 flex flex-col justify-between px-6 py-28 text-center will-change-[transform,opacity,filter]">
 				<div className="flex flex-col items-center">
 					<p className="reveal-line mb-4 font-mono text-xs uppercase tracking-[0.5em] text-neon md:text-sm">
 						<span>DJ · RKT · Argentina</span>
